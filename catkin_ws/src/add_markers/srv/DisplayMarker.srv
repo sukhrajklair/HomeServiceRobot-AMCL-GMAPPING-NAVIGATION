@@ -1,0 +1,6 @@
+bool display
+float64 x
+float64 y
+---
+string msg_feedback
+

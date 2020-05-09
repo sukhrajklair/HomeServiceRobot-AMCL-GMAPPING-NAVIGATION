@@ -1,5 +1,6 @@
 #include <ros/ros.h>
 #include <visualization_msgs/Marker.h>
+#include <string>
 #include "add_markers/DisplayMarker.h"
 
 class MarkerServeAndPublish
@@ -11,6 +12,7 @@ private:
   
   bool serve_callback(add_markers::DisplayMarker::Request& req, add_markers::DisplayMarker::Response& res)
   {
+  	ros::NodeHandle n2;
   	// Set our shape type to be a cube
   	uint32_t shape = visualization_msgs::Marker::CUBE;
   	visualization_msgs::Marker marker;
@@ -53,8 +55,8 @@ private:
  		marker.action = req.display? visualization_msgs::Marker::ADD : visualization_msgs::Marker::DELETE;
  		
  		marker_pub.publish(marker);
- 		
- 		res.msg_feedback = "marker set";
+ 		 
+ 		res.msg_feedback = req.display? "marker set at x=" + std::to_string(req.x) + " and y=" + std::to_string(req.y): "marker hid";
  		ROS_INFO_STREAM(res.msg_feedback);
  		
  		return true;
@@ -70,7 +72,7 @@ public:
 int main( int argc, char** argv )
 {
   ros::init(argc, argv, "add_markers");
-  ros::Rate r(1);
+  //ros::Rate r(1);
   MarkerServeAndPublish addMarkers;
   ros::spin();
   return 0;

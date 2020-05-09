@@ -9,6 +9,7 @@ typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseCl
 int main(int argc, char** argv){
   // Initialize the simple_navigation_drops node
   ros::init(argc, argv, "simple_navigation_drops");
+  ros::NodeHandle n;
   
 	//display marker service client
 	ros::ServiceClient displayMarkerClient = n.serviceClient<add_markers::DisplayMarker>("/add_markers/add_marker");
@@ -39,10 +40,10 @@ int main(int argc, char** argv){
   drop.target_pose.pose.orientation.z = 0.77;
   
   //display marker at pick position
-  display_markers::DisplayMarker marker;
+  add_markers::DisplayMarker marker;
   marker.request.display = true;
   marker.request.x = pick.target_pose.pose.position.x;
-  marker.request.x = pick.target_pose.pose.position.y;
+  marker.request.y = pick.target_pose.pose.position.y;
   displayMarkerClient.call(marker);
   
   // Send the pick position and orientation for the robot to reach
@@ -54,10 +55,12 @@ int main(int argc, char** argv){
 
   // Check if the robot reached its pick pose
   if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
+  {
     ROS_INFO("Hooray, the robot has reached its pickup spot");
     //hide marker if the robot has reached its drop location
 		marker.request.display = false;
 		displayMarkerClient.call(marker);
+		}
   else
     ROS_INFO("The robot failed to reach its pickup spot");
 	
@@ -73,12 +76,14 @@ int main(int argc, char** argv){
 
   // Check if the robot reached its drop pose
   if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
+  {
     ROS_INFO("Hooray, the robot has reached its drop location");
     //display marker at drop position
 		marker.request.display = true;
 		marker.request.x = drop.target_pose.pose.position.x;
-		marker.request.x = drop.target_pose.pose.position.y;
+		marker.request.y = drop.target_pose.pose.position.y;
 		displayMarkerClient.call(marker);
+		}
   else
     ROS_INFO("The robot failed to reach its drop location");
     

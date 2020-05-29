@@ -1,4 +1,4 @@
-# Home Service Robot - GraphSLAM using RTAB-MAP
+# Home Service Robot 
 This robotic program simulates a robot and its environment, and contains code to execute following functions:
 * Map the virtual environment using Grid Based FastSLAM
 * Localize the robot in the virtual environment using AMCL

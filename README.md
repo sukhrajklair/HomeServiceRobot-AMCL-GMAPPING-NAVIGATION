@@ -3,7 +3,7 @@ This robotic program simulates a robot and its environment, and contains code to
 * Map the virtual environment using Grid Based FastSLAM
 * Localize the robot in the virtual environment using AMCL
 * Navigate to goal location using Djikstra's algorithm
-
+![Home Service Robot Gif](HomeService.gif)
 # Dependencies
 ## gmapping
 This ros package implements OpenSlam's Gmapping which provides laser-based SLAM. Using slam_gmapping, you can create a 2-D occupancy grid map (like a building floorplan) from laser and pose data collected by a mobile robot. gampping is based on Grid based FastSLAM algorithm. [Read more here](http://wiki.ros.org/gmapping)
